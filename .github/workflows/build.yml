@@ -1,0 +1,27 @@
+name: Build converted profiles
+
+on:
+  push:
+    paths:
+      - "source/**"
+      - "convert.py"
+      - ".github/workflows/build.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run tests
+        run: python -m unittest discover -s tests
+      - name: Convert profiles
+        run: python convert.py source
+      - name: Upload generated profiles
+        uses: actions/upload-artifact@v4
+        with:
+          name: INDX-Filament-Profiles-HF0.4
+          path: output/
