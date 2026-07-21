@@ -12,7 +12,7 @@ This guide explains how to download and import the converted Polymaker profiles 
 
 Open the repository's **Releases** page and select the latest release:
 
-https://github.com/systemdbrew/INDX-Filament-Profile-Converter/releases/latest
+https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/releases/latest
 
 Download one of these files:
 

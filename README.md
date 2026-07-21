@@ -1,14 +1,14 @@
 <div align="center">
 
-# INDX Filament Profile Converter
+# INDX Polymaker Profile Converter
 
 **Polymaker filament profiles for Prusa CORE One printers equipped with Bondtech INDX high-flow toolheads.**
 
-[![Build profiles](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/actions/workflows/build.yml/badge.svg)](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/actions/workflows/build.yml)
-[![Latest release](https://img.shields.io/github/v/release/systemdbrew/INDX-Filament-Profile-Converter?display_name=tag&sort=semver)](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/releases/latest)
+[![Build profiles](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/actions/workflows/build.yml/badge.svg)](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/actions/workflows/build.yml)
+[![Latest release](https://img.shields.io/github/v/release/systemdbrew/INDX-Polymaker-Profile-Converter?display_name=tag&sort=semver)](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/releases/latest)
 [![License: MIT](https://img.shields.io/badge/Code%20License-MIT-blue.svg)](LICENSE)
 
-[**Download the latest profiles**](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/releases/latest) · [Installation guide](docs/USER_GUIDE.md) · [Release guide](docs/MAINTAINER_GUIDE.md)
+[**Download the latest profiles**](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/releases/latest) · [Installation guide](docs/USER_GUIDE.md) · [Release guide](docs/MAINTAINER_GUIDE.md)
 
 </div>
 
@@ -29,7 +29,7 @@ Polymaker publishes tuned PrusaSlicer profiles for the standard Prusa CORE One. 
 
 ## Download
 
-The easiest way to use this project is to download the newest files from the [**GitHub Releases page**](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/releases/latest).
+The easiest way to use this project is to download the newest files from the [**GitHub Releases page**](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/releases/latest).
 
 | File | Purpose |
 |---|---|
