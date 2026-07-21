@@ -1,0 +1,234 @@
+{
+  "filter": {
+    "brand": "Prusa",
+    "model": "Core One",
+    "slicer": "PrusaSlicer"
+  },
+  "profileCount": 37,
+  "profiles": [
+    {
+      "filename": "Fiberon ASA-CF08 @Prusa Core One.ini",
+      "path": "preset/Fiberon ASA-CF08/Prusa/Core One/PrusaSlicer/Fiberon ASA-CF08 @Prusa Core One.ini",
+      "sha256": "d79aff7eea25c0463e54ef2b2231879ec85f248414abdf9b86e04de03a9e056e",
+      "updatedAt": "2026-05-27T11:04:12+08:00"
+    },
+    {
+      "filename": "Panchroma CoPE @Prusa Core One.ini",
+      "path": "preset/Panchroma CoPE/Prusa/Core One/PrusaSlicer/Panchroma CoPE @Prusa Core One.ini",
+      "sha256": "6d7fb7f7aedf334cf8828db41ba632e8d0a47eb048b622432c85a15b3bf2f458",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Celestial @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Celestial/Prusa/Core One/PrusaSlicer/Panchroma PLA Celestial @Prusa Core One.ini",
+      "sha256": "25de34377e93c1b98b973ae93e4b15909c08cbd107e3d6920978aa288721a303",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Galaxy @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Galaxy/Prusa/Core One/PrusaSlicer/Panchroma PLA Galaxy @Prusa Core One.ini",
+      "sha256": "f4ea9d59f377c7ca4d244d6e5aaff37f69b00b342b21d9763bc4d4cd6078c28e",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Glow @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Glow/Prusa/Core One/PrusaSlicer/Panchroma PLA Glow @Prusa Core One.ini",
+      "sha256": "66c64191d5129988c7ce4a48f76f6f5990bac9dd19f909244b6e0ae08436250d",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Luminous @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Luminous/Prusa/Core One/PrusaSlicer/Panchroma PLA Luminous @Prusa Core One.ini",
+      "sha256": "bc96d57b405ffa6d3dea319469b6fa220ef0fbf5ccf5a05c49b495fee597760e",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Marble @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Marble/Prusa/Core One/PrusaSlicer/Panchroma PLA Marble @Prusa Core One.ini",
+      "sha256": "765e9f960be1e121556d05bc9e1c287dc22af56ee7249a1b1acf40123bcbdad5",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Matte @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Matte/Prusa/Core One/PrusaSlicer/Panchroma PLA Matte @Prusa Core One.ini",
+      "sha256": "f0def6337060403d8c0999e8a8864ec8218ff5688cd4d3d04afe18c436f88cf1",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Metallic @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Metallic/Prusa/Core One/PrusaSlicer/Panchroma PLA Metallic @Prusa Core One.ini",
+      "sha256": "e97e429f7a03bef1eee2d84522bf30ae4559b8c83662bf4b5dda9cd68504ca5a",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Neon @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Neon/Prusa/Core One/PrusaSlicer/Panchroma PLA Neon @Prusa Core One.ini",
+      "sha256": "27fed282e895257af37366b16fc189db5f0cf61369f72846e72afc0a6730bf8e",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Satin @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Satin/Prusa/Core One/PrusaSlicer/Panchroma PLA Satin @Prusa Core One.ini",
+      "sha256": "8c86166ef0700a5a5d47ad73d7ba58c379e03d1111ad0c21a7e92a81883b5401",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Silk @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Silk/Prusa/Core One/PrusaSlicer/Panchroma PLA Silk @Prusa Core One.ini",
+      "sha256": "83075e3856affd79269b9611f1eb83d318fa6a7ceed1eb312aacedbf0808e869",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Starlight @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Starlight/Prusa/Core One/PrusaSlicer/Panchroma PLA Starlight @Prusa Core One.ini",
+      "sha256": "090b4df1f8c2a9bfed692ed30f5346a5dc0b623bd99f61f27a48034852dd76ff",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA Translucent @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA Translucent/Prusa/Core One/PrusaSlicer/Panchroma PLA Translucent @Prusa Core One.ini",
+      "sha256": "f7d330de89ab710587009a851453b2a4eeb570f74efe616718cf2a178a18e4ee",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA UV Shift @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA UV Shift/Prusa/Core One/PrusaSlicer/Panchroma PLA UV Shift @Prusa Core One.ini",
+      "sha256": "3d483e2a1c1822c2d4b3726dea2d29a6a69817c8d345e41a202b99060a58354b",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Panchroma PLA @Prusa Core One.ini",
+      "path": "preset/Panchroma PLA/Prusa/Core One/PrusaSlicer/Panchroma PLA @Prusa Core One.ini",
+      "sha256": "2d98eaf97123aaa936a13ae1b1b030b2c6ba93869ff48793fbd3c6c2f6d0f232",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite CosPLA @Prusa Core One.ini",
+      "path": "preset/PolyLite CosPLA/Prusa/Core One/PrusaSlicer/PolyLite CosPLA @Prusa Core One.ini",
+      "sha256": "a00bbc22f09cfcf583d79dbd79674155d8e26e6c80d4ef691b3d32c2a38b20a9",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Galaxy @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Galaxy/Prusa/Core One/PrusaSlicer/PolyLite PLA Galaxy @Prusa Core One.ini",
+      "sha256": "7f2631a1e95c720e3bd23dbb9fb02b092ee3bb346449589a3afcc69af32fb52c",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Glow @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Glow/Prusa/Core One/PrusaSlicer/PolyLite PLA Glow @Prusa Core One.ini",
+      "sha256": "9a9a9c5ec01009ea59233dd81f3dfd2e5bb852f307123a6445e5a7ecd8d78c58",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Luminous @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Luminous/Prusa/Core One/PrusaSlicer/PolyLite PLA Luminous @Prusa Core One.ini",
+      "sha256": "74e6a054bb1a59592ef90f7e85c778fcf0c978744a2cf5af44c83f5ce8f61c6c",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Neon @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Neon/Prusa/Core One/PrusaSlicer/PolyLite PLA Neon @Prusa Core One.ini",
+      "sha256": "c678b27a99f0dd4b824f9700cb8def71b735799f1cbba2bee40a9b5a73bb000e",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Pro Metallic @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Pro Metallic/Prusa/Core One/PrusaSlicer/PolyLite PLA Pro Metallic @Prusa Core One.ini",
+      "sha256": "11d9818e19181f0a4d784ae172b7e4b6d8e16d194dd4ac8949f711ff7a257642",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Pro @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Pro/Prusa/Core One/PrusaSlicer/PolyLite PLA Pro @Prusa Core One.ini",
+      "sha256": "2ef32ff857c28f19c20e264f5b7386f127b9df20edfc59c16d334afd23fe29b5",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Starlight @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Starlight/Prusa/Core One/PrusaSlicer/PolyLite PLA Starlight @Prusa Core One.ini",
+      "sha256": "9ac43f53fd9b2e25811354c26ea73430f74b4a904e5e6557f5fe1c01348ae95b",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA Translucent @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA Translucent/Prusa/Core One/PrusaSlicer/PolyLite PLA Translucent @Prusa Core One.ini",
+      "sha256": "e6573f3af467bb3350f16bd6a9dd1fa447a8ddbe4e0ee86a8661a945548162ab",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyLite PLA @Prusa Core One.ini",
+      "path": "preset/PolyLite PLA/Prusa/Core One/PrusaSlicer/PolyLite PLA @Prusa Core One.ini",
+      "sha256": "64188e512fa11d97dd48d1ec870f39554ddcc3d0587dca147a43f4a2179928b0",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyMax PLA @Prusa Core One.ini",
+      "path": "preset/PolyMax PLA/Prusa/Core One/PrusaSlicer/PolyMax PLA @Prusa Core One.ini",
+      "sha256": "c9977ef4e6994e9f4e3f8760f4d8d467b41d8dfb0cba2841b8006b70d5b42b36",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyTerra PLA Marble @Prusa Core One.ini",
+      "path": "preset/PolyTerra PLA Marble/Prusa/Core One/PrusaSlicer/PolyTerra PLA Marble @Prusa Core One.ini",
+      "sha256": "937c029d8e9a91b78628e10607e671251e3e21f88bd3a46a33ebbb656f09da4f",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyTerra PLA+ @Prusa Core One.ini",
+      "path": "preset/PolyTerra PLA+/Prusa/Core One/PrusaSlicer/PolyTerra PLA+ @Prusa Core One.ini",
+      "sha256": "04fdc57f8c9eb462394d0d13fd4bf5031c2306752685dbfba6959ee7f5e679a1",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "PolyTerra PLA @Prusa Core One.ini",
+      "path": "preset/PolyTerra PLA/Prusa/Core One/PrusaSlicer/PolyTerra PLA @Prusa Core One.ini",
+      "sha256": "32819e135cf246306833335615fcd929e8fdeee495ffd7ed686bad78efd92b40",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Polymaker HT-PLA-GF @Prusa Core One.ini",
+      "path": "preset/Polymaker HT-PLA-GF/Prusa/Core One/PrusaSlicer/Polymaker HT-PLA-GF @Prusa Core One.ini",
+      "sha256": "001b74b1d6c273d50acbc34cf3b7435255b8f487f60537de0e4e751767e28d3e",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Polymaker HT-PLA @Prusa Core One.ini",
+      "path": "preset/Polymaker HT-PLA/Prusa/Core One/PrusaSlicer/Polymaker HT-PLA @Prusa Core One.ini",
+      "sha256": "23fc387982f9c7206ee6f4ad62db58ab389a10ce05085930abe257b2fabfd72d",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Polymaker PETG Galaxy @Prusa Core One.ini",
+      "path": "preset/Polymaker PETG Galaxy/Prusa/Core One/PrusaSlicer/Polymaker PETG Galaxy @Prusa Core One.ini",
+      "sha256": "e8b712af27e51170a898a9725abcba2733c12d018639531cc67e809ef8aaee82",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Polymaker PETG @Prusa Core One.ini",
+      "path": "preset/Polymaker PETG/Prusa/Core One/PrusaSlicer/Polymaker PETG @Prusa Core One.ini",
+      "sha256": "3da4281c44925a8421c7698eddf094aab28d8ba2c507a59cc55c1e12779f0523",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Polymaker PLA Pro Metallic @Prusa Core One.ini",
+      "path": "preset/Polymaker PLA Pro Metallic/Prusa/Core One/PrusaSlicer/Polymaker PLA Pro Metallic @Prusa Core One.ini",
+      "sha256": "2610f05e63bd76a2a298eb3f6a7c1440723e18e75c66a5fa101f2566e1f4c880",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Polymaker PLA Pro @Prusa Core One.ini",
+      "path": "preset/Polymaker PLA Pro/Prusa/Core One/PrusaSlicer/Polymaker PLA Pro @Prusa Core One.ini",
+      "sha256": "0b775e6b56f923788de3c904d720c6b8dfd8d37a4d48212312af7065640fd6f8",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    },
+    {
+      "filename": "Polymaker PLA @Prusa Core One.ini",
+      "path": "preset/Polymaker PLA/Prusa/Core One/PrusaSlicer/Polymaker PLA @Prusa Core One.ini",
+      "sha256": "71e821587215ca345089a6ed021d02394ad8176b03466c5eaa506ac3a75d785a",
+      "updatedAt": "2026-05-06T13:59:02+08:00"
+    }
+  ],
+  "schemaVersion": 1,
+  "source": "https://raw.githubusercontent.com/Polymaker3D/Polymaker-Preset/main/index.json"
+}

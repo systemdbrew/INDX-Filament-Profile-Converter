@@ -10,6 +10,7 @@ on:
       - "source/**"
       - "convert.py"
       - "tests/**"
+      - "scripts/**"
       - ".github/workflows/build.yml"
   workflow_dispatch:
 

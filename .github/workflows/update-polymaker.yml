@@ -1,0 +1,71 @@
+name: Check for Polymaker profile updates
+
+on:
+  schedule:
+    - cron: "23 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-polymaker-profiles
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download current Prusa Core One profiles
+        run: python scripts/sync_polymaker.py
+
+      - name: Detect upstream changes
+        id: changes
+        shell: bash
+        run: |
+          if git diff --quiet -- source/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run tests
+        if: steps.changes.outputs.changed == 'true'
+        run: python -m unittest discover -s tests -v
+
+      - name: Validate conversion
+        if: steps.changes.outputs.changed == 'true'
+        run: python convert.py source/polymaker-presets-core-one.zip
+
+      - name: Create or update pull request
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: automation/update-polymaker-profiles
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$BRANCH"
+          git add source/
+          git commit -m "Update Polymaker Core One profiles"
+          git fetch origin "$BRANCH:refs/remotes/origin/$BRANCH" || true
+          git push --force-with-lease origin "$BRANCH"
+
+          if ! gh pr view "$BRANCH" --json url --jq .url >/dev/null 2>&1; then
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "Update Polymaker Core One profiles" \
+              --body "Automated update from Polymaker's PrusaSlicer/Core One catalog. Tests and profile conversion completed successfully."
+          fi

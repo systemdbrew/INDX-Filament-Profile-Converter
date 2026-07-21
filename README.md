@@ -56,7 +56,18 @@ printer_model=~/(COREONE_INDX4T|COREONE_INDX8T)/ and nozzle_diameter[0]==0.4 and
 
 ## Automated builds and releases
 
-GitHub Actions tests the converter and generates fresh profile downloads whenever the source Polymaker archive or converter changes.
+GitHub Actions checks Polymaker's public preset catalog every day for exact
+`Prusa` / `Core One` / `PrusaSlicer` matches. It compares each profile's
+reported modification time and SHA-256 content hash with the tracked manifest.
+
+When upstream profiles change, the automation downloads a fresh source archive,
+runs the converter tests, validates all generated profiles, and opens a pull
+request for maintainer review. Unexpected empty results, duplicate filenames,
+invalid profile files, or conversion failures stop the update without changing
+`main`.
+
+The build workflow generates fresh profile downloads whenever the source
+Polymaker archive or converter changes.
 
 A version tag such as `v1.1.0` automatically creates a GitHub Release containing the generated bundle, individual profiles, and checksums.
 
@@ -66,12 +77,17 @@ Project maintainers can follow the [release and update guide](docs/MAINTAINER_GU
 
 ```text
 .
-├── .github/workflows/build.yml
+├── .github/workflows/
+│   ├── build.yml
+│   └── update-polymaker.yml
 ├── docs/
 │   ├── MAINTAINER_GUIDE.md
 │   └── USER_GUIDE.md
+├── scripts/
+│   └── sync_polymaker.py
 ├── source/
-│   └── polymaker-presets-37.zip
+│   ├── polymaker-manifest.json
+│   └── polymaker-presets-core-one.zip
 ├── tests/
 ├── convert.py
 ├── LICENSE

@@ -2,6 +2,20 @@
 
 This document covers updating the source Polymaker profiles and publishing a new GitHub Release.
 
+## Automatic upstream checks
+
+The `Check for Polymaker profile updates` workflow runs daily and can also be
+started manually. It reads Polymaker's machine-readable preset index, selects
+only exact `Prusa` / `Core One` / `PrusaSlicer` entries, and compares both the
+reported modification times and downloaded file hashes with
+`source/polymaker-manifest.json`.
+
+When profiles change, the workflow downloads a fresh deterministic source ZIP,
+runs the tests and converter, and opens or updates an automated pull request.
+Review and merge that pull request before publishing a release. A failed
+download, unexpected empty result, duplicate filename, or invalid-looking INI
+causes the workflow to stop without modifying `main`.
+
 ## How releases work
 
 The workflow in `.github/workflows/build.yml` runs when relevant files change on `main`, when a version tag is pushed, or when started manually.
