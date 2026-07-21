@@ -13,8 +13,6 @@ from pathlib import Path
 SUPPORTED_MODELS = (
     "COREONE_INDX4T",
     "COREONE_INDX8T",
-    "COREONEL_INDX4T",
-    "COREONEL_INDX8T",
 )
 COMPATIBILITY = (
     "printer_model=~/(" + "|".join(SUPPORTED_MODELS) + ")/ "

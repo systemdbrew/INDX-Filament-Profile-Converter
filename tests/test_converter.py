@@ -8,7 +8,7 @@ from convert import COMPATIBILITY, convert_profile
 
 
 class ConverterTests(unittest.TestCase):
-    def test_coreone_profile_is_converted_for_all_indx_models(self):
+    def test_coreone_profile_is_converted_for_supported_indx_models(self):
         source = """filament_settings_id = Test PLA @Prusa Core One
 inherits = Generic PLA @COREONE
 compatible_printers_condition = printer_model=~/(COREONE)/ and nozzle_diameter[0]==0.4
@@ -17,13 +17,9 @@ compatible_printers_condition = printer_model=~/(COREONE)/ and nozzle_diameter[0
         self.assertIn("inherits = Generic PLA @COREONEINDX HF0.4", converted)
         self.assertIn("filament_settings_id = Test PLA @Prusa CORE One INDX HF0.4", converted)
         self.assertIn(f"compatible_printers_condition = {COMPATIBILITY}", converted)
-        for model in (
-            "COREONE_INDX4T",
-            "COREONE_INDX8T",
-            "COREONEL_INDX4T",
-            "COREONEL_INDX8T",
-        ):
+        for model in ("COREONE_INDX4T", "COREONE_INDX8T"):
             self.assertIn(model, converted)
+        self.assertNotIn("COREONEL", converted)
 
     def test_existing_indx_parent_is_not_modified_twice(self):
         source = "inherits = Generic PLA @COREONEINDX HF0.4\n"

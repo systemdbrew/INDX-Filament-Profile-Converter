@@ -6,8 +6,6 @@ The included Polymaker conversion supports:
 
 - Prusa CORE One INDX 4T
 - Prusa CORE One INDX 8T
-- Prusa CORE One L INDX 4T
-- Prusa CORE One L INDX 8T
 - HF 0.4 mm nozzles
 
 ## Ready-to-import files
@@ -49,14 +47,14 @@ python convert.py path/to/profiles.zip --output output
 The converter preserves the filament-specific tuning and changes only INDX-related compatibility metadata:
 
 - Converts Core One parent profiles to their `COREONEINDX HF0.4` equivalents
-- Adds compatibility for 4T and 8T CORE One and CORE One L printer models
+- Adds compatibility for CORE One INDX 4T and 8T printer models
 - Requires a 0.4 mm high-flow nozzle
 - Renames the filament settings ID to identify it as an INDX HF0.4 preset
 
 The generated compatibility expression is:
 
 ```text
-printer_model=~/(COREONE_INDX4T|COREONE_INDX8T|COREONEL_INDX4T|COREONEL_INDX8T)/ and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]
+printer_model=~/(COREONE_INDX4T|COREONE_INDX8T)/ and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]
 ```
 
 ## Updating the source profiles
