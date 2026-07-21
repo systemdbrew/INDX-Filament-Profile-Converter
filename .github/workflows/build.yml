@@ -1,6 +1,13 @@
 name: Build and release Polymaker profiles
 
 on:
+  pull_request:
+    paths:
+      - "source/**"
+      - "convert.py"
+      - "tests/**"
+      - "scripts/**"
+      - ".github/workflows/build.yml"
   push:
     branches:
       - main
