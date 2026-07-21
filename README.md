@@ -1,100 +1,75 @@
+<div align="center">
+
 # INDX Filament Profile Converter
 
-Converts Polymaker PrusaSlicer filament presets made for the Prusa CORE One into presets compatible with Bondtech INDX high-flow toolhead configurations.
+**Polymaker filament profiles for Prusa CORE One printers equipped with Bondtech INDX high-flow toolheads.**
 
-The generated profiles support:
+[![Build profiles](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/actions/workflows/build.yml/badge.svg)](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/actions/workflows/build.yml)
+[![Latest release](https://img.shields.io/github/v/release/systemdbrew/INDX-Filament-Profile-Converter?display_name=tag&sort=semver)](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/releases/latest)
+[![License: MIT](https://img.shields.io/badge/Code%20License-MIT-blue.svg)](LICENSE)
 
-- Prusa CORE One INDX 4T
-- Prusa CORE One INDX 8T
-- HF 0.4 mm nozzles
+[**Download the latest profiles**](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/releases/latest) · [Installation guide](docs/USER_GUIDE.md) · [Release guide](docs/MAINTAINER_GUIDE.md)
 
-> This project currently targets Polymaker's published CORE One profiles. Support for other manufacturers may be considered later, but is not currently a project goal.
+</div>
 
-## Download profiles
+---
 
-Open the repository's **Releases** page and download either:
+## About
 
-- `Polymaker-COREONE-INDX-HF0.4-config-bundle.ini` — recommended combined PrusaSlicer bundle
-- `Polymaker-COREONE-INDX-HF0.4.zip` — individual converted presets
-- `SHA256SUMS.txt` — checksums for verifying the downloads
+Polymaker publishes tuned PrusaSlicer profiles for the standard Prusa CORE One. This project converts those profiles for Bondtech INDX high-flow configurations while preserving Polymaker's filament-specific tuning.
 
-In PrusaSlicer, import the bundle through **File → Import → Import Config Bundle**.
+### Supported configurations
 
-## Automated builds and releases
+| Printer | Tool configuration | Nozzle |
+|---|---:|---:|
+| Prusa CORE One INDX | 4T | HF 0.4 mm |
+| Prusa CORE One INDX | 8T | HF 0.4 mm |
 
-GitHub Actions validates and builds the profiles whenever the converter, tests, workflow, or source profiles change on `main`.
+> CORE One L is not included because an INDX configuration for that printer does not currently exist.
 
-Normal pushes create a temporary downloadable workflow artifact. Version tags additionally create a permanent GitHub Release and attach the generated bundle, ZIP, and SHA-256 checksums.
+## Download
 
-### Publish a new release
+The easiest way to use this project is to download the newest files from the [**GitHub Releases page**](https://github.com/systemdbrew/INDX-Filament-Profile-Converter/releases/latest).
 
-1. Replace the Polymaker ZIP in `source/` with the updated profile archive.
-2. Commit and push the change:
+| File | Purpose |
+|---|---|
+| `Polymaker-COREONE-INDX-HF0.4-config-bundle.ini` | Recommended combined PrusaSlicer import bundle |
+| `Polymaker-COREONE-INDX-HF0.4.zip` | Individual converted filament presets |
+| `SHA256SUMS.txt` | Download integrity checksums |
 
-```bash
-git add source/
-git commit -m "Update Polymaker profiles"
-git push
-```
+For import instructions and troubleshooting, see the [user guide](docs/USER_GUIDE.md).
 
-3. Confirm the **Build and release Polymaker profiles** workflow succeeds.
-4. Create and push a version tag:
+## What the converter changes
 
-```bash
-git tag -a v1.0.0 -m "INDX Polymaker profiles v1.0.0"
-git push origin v1.0.0
-```
+The converter preserves Polymaker's temperatures, cooling, extrusion, and filament-specific tuning. It changes only the metadata needed for INDX compatibility:
 
-GitHub Actions will then:
-
-1. Run the automated tests.
-2. Convert every source profile.
-3. Build the combined config bundle and individual-profile ZIP.
-4. Generate SHA-256 checksums.
-5. Create the GitHub Release using automatically generated release notes.
-6. Attach all three files to the release.
-
-For the next profile update, increment the version, for example `v1.0.1` for a correction or `v1.1.0` for a larger profile update.
-
-## Run the converter locally
-
-Python 3.10 or newer is recommended. The converter uses only the Python standard library.
-
-Place exactly one Polymaker source ZIP in `source/`, then run:
-
-```bash
-python convert.py source/polymaker-presets-37.zip
-```
-
-Generated files are written to:
-
-```text
-output/
-├── individual/
-├── bundle/INDX-Filament-Profiles-HF0.4-config-bundle.ini
-└── release/INDX-Filament-Profiles-HF0.4.zip
-```
-
-## What is changed
-
-The converter preserves Polymaker's filament-specific tuning and changes only INDX-related compatibility metadata:
-
-- Converts CORE One parent profiles to their `COREONEINDX HF0.4` equivalents
-- Adds compatibility for CORE One INDX 4T and 8T printer models
+- Replaces CORE One parent profiles with their `COREONEINDX HF0.4` equivalents
+- Adds compatibility for `COREONE_INDX4T` and `COREONE_INDX8T`
 - Requires a 0.4 mm high-flow nozzle
-- Renames the filament settings ID to identify it as an INDX HF0.4 preset
+- Renames each filament settings ID to clearly identify the INDX profile
 
-The generated compatibility expression is:
+Generated compatibility condition:
 
 ```text
 printer_model=~/(COREONE_INDX4T|COREONE_INDX8T)/ and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]
 ```
 
-## Repository contents
+## Automated builds and releases
+
+GitHub Actions tests the converter and generates fresh profile downloads whenever the source Polymaker archive or converter changes.
+
+A version tag such as `v1.1.0` automatically creates a GitHub Release containing the generated bundle, individual profiles, and checksums.
+
+Project maintainers can follow the [release and update guide](docs/MAINTAINER_GUIDE.md).
+
+## Repository layout
 
 ```text
 .
 ├── .github/workflows/build.yml
+├── docs/
+│   ├── MAINTAINER_GUIDE.md
+│   └── USER_GUIDE.md
 ├── source/
 │   └── polymaker-presets-37.zip
 ├── tests/
@@ -103,7 +78,11 @@ printer_model=~/(COREONE_INDX4T|COREONE_INDX8T)/ and nozzle_diameter[0]==0.4 and
 └── README.md
 ```
 
-Generated output is intentionally excluded from Git. GitHub Releases are the public distribution point for converted profiles.
+Generated profiles are intentionally excluded from Git. GitHub Releases are the public distribution point.
+
+## Project scope
+
+This project currently focuses only on Polymaker because Polymaker provides comprehensive PrusaSlicer profile packs and these are the profiles used by the maintainer. Other filament brands may be considered later, but are not currently a project goal.
 
 ## Disclaimer
 
@@ -111,4 +90,4 @@ This is a community project and is not affiliated with Bondtech, Prusa Research,
 
 ## License
 
-The converter code is licensed under the MIT License. Third-party filament profile data remains subject to the terms of its original publisher.
+The converter code is licensed under the [MIT License](LICENSE). Third-party filament profile data remains subject to the terms of its original publisher.
