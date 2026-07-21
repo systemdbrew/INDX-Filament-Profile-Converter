@@ -1,27 +1,82 @@
-name: Build converted profiles
+name: Build and release Polymaker profiles
 
 on:
   push:
+    branches:
+      - main
+    tags:
+      - "v*"
     paths:
       - "source/**"
       - "convert.py"
+      - "tests/**"
       - ".github/workflows/build.yml"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Run tests
         run: python -m unittest discover -s tests
-      - name: Convert profiles
-        run: python convert.py source
-      - name: Upload generated profiles
+
+      - name: Locate Polymaker source archive
+        id: source
+        shell: bash
+        run: |
+          mapfile -t archives < <(find source -maxdepth 1 -type f -iname '*.zip' | sort)
+          if [ "${#archives[@]}" -ne 1 ]; then
+            echo "Expected exactly one ZIP archive in source/, found ${#archives[@]}." >&2
+            exit 1
+          fi
+          echo "archive=${archives[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Convert Polymaker profiles
+        run: python convert.py "${{ steps.source.outputs.archive }}"
+
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          mkdir -p release-assets
+          cp output/bundle/INDX-Filament-Profiles-HF0.4-config-bundle.ini \
+            release-assets/Polymaker-COREONE-INDX-HF0.4-config-bundle.ini
+          cp output/release/INDX-Filament-Profiles-HF0.4.zip \
+            release-assets/Polymaker-COREONE-INDX-HF0.4.zip
+          cd release-assets
+          sha256sum \
+            Polymaker-COREONE-INDX-HF0.4-config-bundle.ini \
+            Polymaker-COREONE-INDX-HF0.4.zip \
+            > SHA256SUMS.txt
+
+      - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: INDX-Filament-Profiles-HF0.4
-          path: output/
+          name: Polymaker-COREONE-INDX-HF0.4
+          path: release-assets/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            release-assets/Polymaker-COREONE-INDX-HF0.4-config-bundle.ini \
+            release-assets/Polymaker-COREONE-INDX-HF0.4.zip \
+            release-assets/SHA256SUMS.txt \
+            --title "INDX Polymaker Profiles ${{ github.ref_name }}" \
+            --generate-notes \
+            --verify-tag

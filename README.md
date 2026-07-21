@@ -1,25 +1,66 @@
 # INDX Filament Profile Converter
 
-Convert PrusaSlicer filament presets made for the Prusa CORE One into presets compatible with Bondtech INDX high-flow toolhead configurations.
+Converts Polymaker PrusaSlicer filament presets made for the Prusa CORE One into presets compatible with Bondtech INDX high-flow toolhead configurations.
 
-The included Polymaker conversion supports:
+The generated profiles support:
 
 - Prusa CORE One INDX 4T
 - Prusa CORE One INDX 8T
 - HF 0.4 mm nozzles
 
-## Ready-to-import files
+> This project currently targets Polymaker's published CORE One profiles. Support for other manufacturers may be considered later, but is not currently a project goal.
 
-The `releases/` directory contains:
+## Download profiles
 
-- `Polymaker-COREONE-INDX-HF0.4-config-bundle.ini` — combined PrusaSlicer bundle
-- `polymaker-presets-COREONE-INDX-HF0.4.zip` — individual converted presets
+Open the repository's **Releases** page and download either:
+
+- `Polymaker-COREONE-INDX-HF0.4-config-bundle.ini` — recommended combined PrusaSlicer bundle
+- `Polymaker-COREONE-INDX-HF0.4.zip` — individual converted presets
+- `SHA256SUMS.txt` — checksums for verifying the downloads
 
 In PrusaSlicer, import the bundle through **File → Import → Import Config Bundle**.
 
-## Run the converter
+## Automated builds and releases
 
-Python 3.10 or newer is recommended. The script uses only the Python standard library.
+GitHub Actions validates and builds the profiles whenever the converter, tests, workflow, or source profiles change on `main`.
+
+Normal pushes create a temporary downloadable workflow artifact. Version tags additionally create a permanent GitHub Release and attach the generated bundle, ZIP, and SHA-256 checksums.
+
+### Publish a new release
+
+1. Replace the Polymaker ZIP in `source/` with the updated profile archive.
+2. Commit and push the change:
+
+```bash
+git add source/
+git commit -m "Update Polymaker profiles"
+git push
+```
+
+3. Confirm the **Build and release Polymaker profiles** workflow succeeds.
+4. Create and push a version tag:
+
+```bash
+git tag -a v1.0.0 -m "INDX Polymaker profiles v1.0.0"
+git push origin v1.0.0
+```
+
+GitHub Actions will then:
+
+1. Run the automated tests.
+2. Convert every source profile.
+3. Build the combined config bundle and individual-profile ZIP.
+4. Generate SHA-256 checksums.
+5. Create the GitHub Release using automatically generated release notes.
+6. Attach all three files to the release.
+
+For the next profile update, increment the version, for example `v1.0.1` for a correction or `v1.1.0` for a larger profile update.
+
+## Run the converter locally
+
+Python 3.10 or newer is recommended. The converter uses only the Python standard library.
+
+Place exactly one Polymaker source ZIP in `source/`, then run:
 
 ```bash
 python convert.py source/polymaker-presets-37.zip
@@ -34,19 +75,11 @@ output/
 └── release/INDX-Filament-Profiles-HF0.4.zip
 ```
 
-The input can be a ZIP archive, a directory containing `.ini` files, or one `.ini` file:
-
-```bash
-python convert.py path/to/profile.ini
-python convert.py path/to/profile-directory
-python convert.py path/to/profiles.zip --output output
-```
-
 ## What is changed
 
-The converter preserves the filament-specific tuning and changes only INDX-related compatibility metadata:
+The converter preserves Polymaker's filament-specific tuning and changes only INDX-related compatibility metadata:
 
-- Converts Core One parent profiles to their `COREONEINDX HF0.4` equivalents
+- Converts CORE One parent profiles to their `COREONEINDX HF0.4` equivalents
 - Adds compatibility for CORE One INDX 4T and 8T printer models
 - Requires a 0.4 mm high-flow nozzle
 - Renames the filament settings ID to identify it as an INDX HF0.4 preset
@@ -57,9 +90,20 @@ The generated compatibility expression is:
 printer_model=~/(COREONE_INDX4T|COREONE_INDX8T)/ and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]
 ```
 
-## Updating the source profiles
+## Repository contents
 
-Replace the ZIP in `source/` with a newer vendor profile archive, then rerun the converter. A GitHub Actions workflow also builds downloadable artifacts whenever the source profiles or converter are changed.
+```text
+.
+├── .github/workflows/build.yml
+├── source/
+│   └── polymaker-presets-37.zip
+├── tests/
+├── convert.py
+├── LICENSE
+└── README.md
+```
+
+Generated output is intentionally excluded from Git. GitHub Releases are the public distribution point for converted profiles.
 
 ## Disclaimer
 
