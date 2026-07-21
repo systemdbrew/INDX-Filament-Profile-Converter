@@ -4,8 +4,7 @@ This guide explains how to download and import the converted Polymaker profiles 
 
 ## Requirements
 
-- PrusaSlicer with a configured Prusa CORE One INDX printer
-- A CORE One INDX 4T or 8T configuration
+- PrusaSlicer with a supported CORE One standard or INDX printer configuration
 - A 0.4 mm high-flow nozzle profile
 
 ## Download the profiles
@@ -27,10 +26,10 @@ The config bundle is the simplest option because it imports all converted Polyma
 2. Select **File → Import → Import Config Bundle**.
 3. Choose `Polymaker-COREONE-INDX-HF0.4-config-bundle.ini`.
 4. Confirm the import.
-5. Select your CORE One INDX printer profile.
+5. Select your CORE One standard or INDX printer profile.
 6. Open the filament preset list and choose the desired Polymaker material.
 
-Imported profiles include `INDX HF0.4` in their names so they are easy to distinguish from standard CORE One profiles.
+Each material has two imported presets: `HF0.4` for standard CORE One configurations and `INDX HF0.4` for Bondtech INDX configurations.
 
 ## Import individual profiles
 
@@ -41,10 +40,10 @@ Imported profiles include `INDX HF0.4` in their names so they are easy to distin
 
 ## Verify compatibility
 
-A converted profile should be visible when the selected printer is one of the following:
+A converted profile should be visible when the selected printer uses one of these model identifiers:
 
-- Prusa CORE One INDX 4T with HF 0.4 mm nozzle
-- Prusa CORE One INDX 8T with HF 0.4 mm nozzle
+- Standard: `COREONE`, `COREONEOAK`, `COREONEMMU3`, `COREONEL`, or `COREONELMMU3`
+- INDX: `COREONE_INDX4T`, `COREONE_INDX8T`, `COREONEL_INDX4T`, or `COREONEL_INDX8T`
 
 The profiles intentionally do not appear for standard-flow nozzles or unrelated printer models.
 
@@ -62,7 +61,7 @@ Keeping an older release is useful until you have verified the newer profiles on
 
 ### The profiles do not appear
 
-Confirm that the selected printer is a CORE One INDX 4T or 8T profile using an HF 0.4 mm nozzle. The compatibility filter hides the profiles from other printer and nozzle configurations.
+Confirm that the selected printer uses one of the supported model identifiers and an HF 0.4 mm nozzle. The compatibility filter hides the profiles from other printer and nozzle configurations.
 
 ### Prusa Connect reports a material mismatch
 

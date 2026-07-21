@@ -2,7 +2,7 @@
 
 # INDX Polymaker Profile Converter
 
-**Polymaker filament profiles for Prusa CORE One printers equipped with Bondtech INDX high-flow toolheads.**
+**Polymaker filament profiles for Prusa CORE One standard and Bondtech INDX high-flow configurations.**
 
 [![Build profiles](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/actions/workflows/build.yml/badge.svg)](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/actions/workflows/build.yml)
 [![Latest release](https://img.shields.io/github/v/release/systemdbrew/INDX-Polymaker-Profile-Converter?display_name=tag&sort=semver)](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/releases/latest)
@@ -16,20 +16,20 @@
 
 ## About
 
-Polymaker publishes tuned PrusaSlicer profiles for the standard Prusa CORE One. This project converts those profiles for Bondtech INDX high-flow configurations while preserving Polymaker's filament-specific tuning.
+Polymaker publishes tuned PrusaSlicer profiles for the standard Prusa CORE One. This project creates two HF 0.4 mm variants of every profile—standard CORE One and Bondtech INDX—while preserving Polymaker's filament-specific tuning.
 
 ### Supported configurations
 
-| Printer | Tool configuration | Nozzle |
-|---|---:|---:|
-| Prusa CORE One INDX | 4T | HF 0.4 mm |
-| Prusa CORE One INDX | 8T | HF 0.4 mm |
-
-> CORE One L is not included because an INDX configuration for that printer does not currently exist.
+| Profile family | Compatible printer models | Nozzle |
+|---|---|---:|
+| Standard CORE One | `COREONE`, `COREONEOAK`, `COREONEMMU3`, `COREONEL`, `COREONELMMU3` | HF 0.4 mm |
+| Bondtech INDX | `COREONE_INDX4T`, `COREONE_INDX8T`, `COREONEL_INDX4T`, `COREONEL_INDX8T` | HF 0.4 mm |
 
 ## Download
 
 The easiest way to use this project is to download the newest files from the [**GitHub Releases page**](https://github.com/systemdbrew/INDX-Polymaker-Profile-Converter/releases/latest).
+
+The converter includes **all Polymaker profiles published for the Prusa CORE One and PrusaSlicer**.
 
 | File | Purpose |
 |---|---|
@@ -41,17 +41,23 @@ For import instructions and troubleshooting, see the [user guide](docs/USER_GUID
 
 ## What the converter changes
 
-The converter preserves Polymaker's temperatures, cooling, extrusion, and filament-specific tuning. It changes only the metadata needed for INDX compatibility:
+The converter preserves Polymaker's temperatures, cooling, extrusion, and filament-specific tuning. For every source profile it creates:
 
-- Replaces CORE One parent profiles with their `COREONEINDX HF0.4` equivalents
-- Adds compatibility for `COREONE_INDX4T` and `COREONE_INDX8T`
-- Requires a 0.4 mm high-flow nozzle
-- Renames each filament settings ID to clearly identify the INDX profile
+- A standard variant inheriting from the corresponding `@COREONE HF0.4` profile
+- An INDX variant inheriting from the corresponding `@COREONEINDX HF0.4` profile
+- Distinct profile IDs and filenames ending in `HF0.4` or `INDX HF0.4`
+- Compatibility restricted to a 0.4 mm high-flow nozzle and the appropriate printer family
 
-Generated compatibility condition:
+Generated standard compatibility condition:
 
 ```text
-printer_model=~/(COREONE_INDX4T|COREONE_INDX8T)/ and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]
+printer_model=~/(COREONE|COREONEOAK|COREONEMMU3|COREONEL|COREONELMMU3)/ and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]
+```
+
+Generated INDX compatibility condition:
+
+```text
+printer_model=~/(COREONE_INDX4T|COREONE_INDX8T|COREONEL_INDX4T|COREONEL_INDX8T)/ and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]
 ```
 
 ## Automated builds and releases

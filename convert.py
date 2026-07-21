@@ -1,51 +1,69 @@
 #!/usr/bin/env python3
-"""Convert Prusa CORE One filament presets for Bondtech INDX HF nozzles."""
+"""Convert Prusa CORE One filament presets to standard and INDX HF variants."""
 from __future__ import annotations
 
 import argparse
 import re
 import shutil
+import stat
 import sys
 import tempfile
 import zipfile
-from pathlib import Path
+from dataclasses import dataclass
+from pathlib import Path, PurePosixPath
 
-SUPPORTED_MODELS = (
+STANDARD_MODELS = (
+    "COREONE",
+    "COREONEOAK",
+    "COREONEMMU3",
+    "COREONEL",
+    "COREONELMMU3",
+)
+INDX_MODELS = (
     "COREONE_INDX4T",
     "COREONE_INDX8T",
-)
-COMPATIBILITY = (
-    "printer_model=~/(" + "|".join(SUPPORTED_MODELS) + ")/ "
-    "and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]"
+    "COREONEL_INDX4T",
+    "COREONEL_INDX8T",
 )
 
-# Known PrusaSlicer parent profiles. Unknown @COREONE parents are converted
-# mechanically so the script remains useful as source packs evolve.
-INHERIT_MAP = {
-    "Generic PLA @COREONE": "Generic PLA @COREONEINDX HF0.4",
-    "Prusament PLA @COREONE": "Prusament PLA @COREONEINDX HF0.4",
-    "Generic PETG @COREONE": "Generic PETG @COREONEINDX HF0.4",
-    "Prusament PETG @COREONE": "Prusament PETG @COREONEINDX HF0.4",
-    "Generic ASA @COREONE": "Generic ASA @COREONEINDX HF0.4",
-    "Prusament ASA @COREONE": "Prusament ASA @COREONEINDX HF0.4",
-    "Generic ABS @COREONE": "Generic ABS @COREONEINDX HF0.4",
-    "Generic FLEX @COREONE": "Generic FLEX @COREONEINDX HF0.4",
-    "Generic PC @COREONE": "Generic PC @COREONEINDX HF0.4",
-    "Generic PP @COREONE": "Generic PP @COREONEINDX HF0.4",
-    "Generic PA @COREONE": "Generic PA @COREONEINDX HF0.4",
-}
+
+def compatibility_for(models: tuple[str, ...]) -> str:
+    return (
+        "printer_model=~/(" + "|".join(models) + ")/ "
+        "and nozzle_diameter[0]==0.4 and nozzle_high_flow[0]"
+    )
 
 
-def convert_inherits(value: str) -> str:
-    value = value.strip()
-    if value in INHERIT_MAP:
-        return INHERIT_MAP[value]
-    if "@COREONE" in value and "@COREONEINDX" not in value:
-        return value.replace("@COREONE", "@COREONEINDX HF0.4")
-    return value
+@dataclass(frozen=True)
+class ProfileVariant:
+    key: str
+    label: str
+    parent: str
+    models: tuple[str, ...]
+
+    @property
+    def compatibility(self) -> str:
+        return compatibility_for(self.models)
 
 
-def convert_profile(text: str) -> str:
+STANDARD = ProfileVariant("standard", "HF0.4", "@COREONE HF0.4", STANDARD_MODELS)
+INDX = ProfileVariant("indx", "INDX HF0.4", "@COREONEINDX HF0.4", INDX_MODELS)
+PROFILE_VARIANTS = (STANDARD, INDX)
+STANDARD_COMPATIBILITY = STANDARD.compatibility
+INDX_COMPATIBILITY = INDX.compatibility
+# Kept as the public default for callers that previously converted INDX only.
+COMPATIBILITY = INDX_COMPATIBILITY
+
+
+def convert_inherits(value: str, variant: ProfileVariant = INDX) -> str:
+    return re.sub(
+        r"@COREONE(?:INDX)?(?:\s+HF0\.4)?",
+        variant.parent,
+        value.strip(),
+    )
+
+
+def convert_profile(text: str, variant: ProfileVariant = INDX) -> str:
     lines = text.splitlines()
     converted: list[str] = []
     saw_compatibility = False
@@ -53,18 +71,21 @@ def convert_profile(text: str) -> str:
     for line in lines:
         if re.match(r"^inherits\s*=", line):
             key, value = line.split("=", 1)
-            line = f"{key.strip()} = {convert_inherits(value)}"
+            line = f"{key.strip()} = {convert_inherits(value, variant)}"
         elif re.match(r"^compatible_printers_condition\s*=", line):
-            line = f"compatible_printers_condition = {COMPATIBILITY}"
+            line = f"compatible_printers_condition = {variant.compatibility}"
             saw_compatibility = True
         elif re.match(r"^compatible_printers_condition_cummulative\s*=", line):
-            line = f"compatible_printers_condition_cummulative = {COMPATIBILITY}"
+            line = (
+                "compatible_printers_condition_cummulative = "
+                f"{variant.compatibility}"
+            )
         elif re.match(r"^filament_settings_id\s*=", line):
             key, value = line.split("=", 1)
             value = value.strip()
             value = re.sub(
-                r"\s*@Prusa\s+Core\s+One(?:\s+INDX(?:\s+HF0\.4)?)?$",
-                " @Prusa CORE One INDX HF0.4",
+                r"\s*@Prusa\s+Core\s+One(?:\s+(?:INDX\s+)?HF0\.4)?$",
+                f" @Prusa CORE One {variant.label}",
                 value,
                 flags=re.IGNORECASE,
             )
@@ -72,9 +93,23 @@ def convert_profile(text: str) -> str:
         converted.append(line)
 
     if not saw_compatibility:
-        converted.append(f"compatible_printers_condition = {COMPATIBILITY}")
+        converted.append(
+            f"compatible_printers_condition = {variant.compatibility}"
+        )
 
     return "\n".join(converted).rstrip() + "\n"
+
+
+def converted_filename(source: Path, variant: ProfileVariant) -> str:
+    stem = re.sub(
+        r"\s*@Prusa\s+Core\s+One$",
+        f" @Prusa CORE One {variant.label}",
+        source.stem,
+        flags=re.IGNORECASE,
+    )
+    if stem == source.stem:
+        stem = f"{stem} @Prusa CORE One {variant.label}"
+    return f"{stem}.ini"
 
 
 def collect_ini_files(source: Path, temp_dir: Path) -> list[Path]:
@@ -82,7 +117,29 @@ def collect_ini_files(source: Path, temp_dir: Path) -> list[Path]:
         return sorted(source.rglob("*.ini"))
     if source.suffix.lower() == ".zip":
         with zipfile.ZipFile(source) as archive:
-            archive.extractall(temp_dir)
+            extracted: set[Path] = set()
+            for member in archive.infolist():
+                member_path = PurePosixPath(member.filename)
+                if (
+                    not member.filename
+                    or member_path.is_absolute()
+                    or ".." in member_path.parts
+                    or "\\" in member.filename
+                    or stat.S_ISLNK(member.external_attr >> 16)
+                ):
+                    raise ValueError(f"Unsafe ZIP entry: {member.filename!r}")
+
+                destination = temp_dir.joinpath(*member_path.parts)
+                if destination in extracted:
+                    raise ValueError(f"Duplicate ZIP entry: {member.filename!r}")
+                extracted.add(destination)
+
+                if member.is_dir():
+                    destination.mkdir(parents=True, exist_ok=True)
+                    continue
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                with archive.open(member) as source_file, destination.open("wb") as target:
+                    shutil.copyfileobj(source_file, target)
         return sorted(temp_dir.rglob("*.ini"))
     if source.suffix.lower() == ".ini":
         return [source]
@@ -90,12 +147,27 @@ def collect_ini_files(source: Path, temp_dir: Path) -> list[Path]:
 
 
 def build_bundle(files: list[Path], destination: Path) -> None:
-    # PrusaSlicer accepts concatenated exported filament sections as a config bundle.
+    # Config bundles identify each preset with a typed INI section.
     chunks: list[str] = []
     for profile in files:
         text = profile.read_text(encoding="utf-8-sig")
-        chunks.append(text.rstrip())
+        match = re.search(r"^filament_settings_id\s*=\s*(.+?)\s*$", text, re.MULTILINE)
+        if not match:
+            raise ValueError(f"Profile has no filament_settings_id: {profile}")
+        chunks.append(f"[filament:{match.group(1)}]\n{text.rstrip()}")
     destination.write_text("\n\n".join(chunks) + "\n", encoding="utf-8")
+
+
+def reject_duplicate_output_names(files: list[Path]) -> None:
+    names: dict[str, Path] = {}
+    for profile in files:
+        normalized = profile.name.casefold()
+        if normalized in names:
+            raise ValueError(
+                f"Duplicate output filename: {profile.name!r} "
+                f"({names[normalized]} and {profile})"
+            )
+        names[normalized] = profile
 
 
 def main() -> int:
@@ -130,13 +202,18 @@ def main() -> int:
         if not source_files:
             print("No .ini files found", file=sys.stderr)
             return 3
+        reject_duplicate_output_names(source_files)
 
         converted_files: list[Path] = []
         for profile in source_files:
-            converted = convert_profile(profile.read_text(encoding="utf-8-sig"))
-            destination = individual / profile.name
-            destination.write_text(converted, encoding="utf-8")
-            converted_files.append(destination)
+            source_text = profile.read_text(encoding="utf-8-sig")
+            for variant in PROFILE_VARIANTS:
+                converted = convert_profile(source_text, variant)
+                destination = individual / converted_filename(profile, variant)
+                destination.write_text(converted, encoding="utf-8")
+                converted_files.append(destination)
+
+        reject_duplicate_output_names(converted_files)
 
     bundle = bundle_dir / "INDX-Filament-Profiles-HF0.4-config-bundle.ini"
     build_bundle(converted_files, bundle)

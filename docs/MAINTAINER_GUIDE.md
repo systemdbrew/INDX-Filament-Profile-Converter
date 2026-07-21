@@ -24,7 +24,7 @@ It performs the following steps:
 
 1. Runs the converter tests.
 2. Finds the single ZIP archive in `source/`.
-3. Converts the Polymaker profiles.
+3. Converts every Polymaker profile into standard and INDX HF0.4 variants.
 4. Builds a combined PrusaSlicer config bundle.
 5. Builds a ZIP containing individual profiles.
 6. Generates SHA-256 checksums.
